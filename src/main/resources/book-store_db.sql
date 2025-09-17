@@ -1,14 +1,23 @@
+CREATE TABLE books (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255),
+    price DECIMAL(10,2),
+    available BOOLEAN DEFAULT TRUE
+);
 
+INSERT INTO books (title, author, price, available) VALUES
+('Clean Code', 'Robert C. Martin', 15.99, TRUE),
+('Effective Java', 'Joshua Bloch', 20.50, TRUE),
+('Design Patterns', 'Erich Gamma', 18.75, FALSE);
 
-DROP TABLE IF EXISTS `books`;
+CREATE TABLE categories (
+	category_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name	NVARCHAR(250) UNIQUE NOT NULL
+);
 
-CREATE TABLE `books` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL,
-  `available` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `books` VALUES (1,'Clean Code','Robert C. Martin',15.99,1),(2,'Effective Java','Joshua Bloch',20.50,1),(3,'Design 
+INSERT INTO categories (name) VALUE
+('Tiểu thuyết'),
+('Công nghệ'),
+('Truyện tranh'),
+('Tâm lý')
