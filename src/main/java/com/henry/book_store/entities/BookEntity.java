@@ -1,11 +1,8 @@
 package com.henry.book_store.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "books")
@@ -15,19 +12,27 @@ import lombok.Setter;
 @Getter
 public class BookEntity {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Id
     private Integer id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "author")
+    
+    @Column(name = "author", nullable = false)
     private String author;
-    @Column(name = "price")
+    
+    @Column(name = "price", nullable = false)
     private double price;
-    @Column(name = "available")
-    private boolean available;
-
-
+    
+    @Column(name = "available", nullable = false)
+    private boolean available = true;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonBackReference
+    private CategoryEntity category;
+    
+    // Constructors, getters and setters are handled by Lombok
 }

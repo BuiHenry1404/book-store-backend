@@ -1,0 +1,64 @@
+package com.henry.book_store.servieces.Impls;
+
+import com.henry.book_store.constants.ErrorModelConstants;
+import com.henry.book_store.entities.CategoryEntity;
+import com.henry.book_store.exceptions.AppException;
+import com.henry.book_store.repositories.CategoryRepository;
+import com.henry.book_store.servieces.CategoryService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import java.util.Optional;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+
+    public final CategoryRepository categoryRepository;
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public List<CategoryEntity> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public CategoryEntity addCategory(CategoryEntity category) {
+
+      if(categoryRepository.existsByNameCategory(category.getNameCategory())) {
+            throw new AppException(ErrorModelConstants.CATEGORY_EXISTS, "Category already exists");
+        }
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public CategoryEntity updateCategory(Integer idCategory, CategoryEntity category) {
+        return categoryRepository.findById(idCategory)
+                .map(exitstingCategory -> {
+                    if(categoryRepository.existsByIdNotAndNameCategory(idCategory, category.getNameCategory())){
+                        throw new AppException(ErrorModelConstants.CATEGORY_EXISTS, "Category already exists");
+                    }
+                    exitstingCategory.setNameCategory(category.getNameCategory());
+                    return categoryRepository.save(exitstingCategory);
+                }).orElseThrow(() -> {
+                    throw new AppException(ErrorModelConstants.CATEGORY_NOT_FOUND, "Category not found");
+                });
+
+    }
+
+
+    @Override
+    public void deleteCategory(Integer idCategory) {
+
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(idCategory);
+
+        if(categoryEntity.isPresent()) {
+            categoryRepository.deleteById(idCategory);
+        }
+    }
+
+
+}
