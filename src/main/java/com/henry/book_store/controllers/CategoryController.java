@@ -2,6 +2,7 @@ package com.henry.book_store.controllers;
 
 import com.henry.book_store.entities.CategoryEntity;
 import com.henry.book_store.servieces.CategoryService;
+import com.henry.book_store.utils.UrlUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("PUBLIC_URLS.CATEGORY_URL")
+@RequestMapping(UrlUtil.CATEGORY_URL)
 public class CategoryController {
 
     public final CategoryService categoryService;
