@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "books")
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "book_id")
     private Integer id;
 
     @Column(name = "title", nullable = false)
@@ -28,11 +30,22 @@ public class BookEntity {
     
     @Column(name = "available", nullable = false)
     private boolean available = true;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference
-    private CategoryEntity category;
-    
-    // Constructors, getters and setters are handled by Lombok
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @ManyToMany
+    @JoinTable(name = "boook_category",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<CategoryEntity> categories;
+
+
+
+
+
 }
