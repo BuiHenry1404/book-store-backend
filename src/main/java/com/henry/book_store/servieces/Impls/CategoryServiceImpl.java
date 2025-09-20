@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> getAllCategories() {
         if(categoryRepository.findAll().isEmpty()){
-            throw new AppException(ErrorModelConstants.CATEGORY_EMPTY, "Category is empty.");
+            throw new AppException(ErrorModelConstants.CATEGORY_EMPTY, "Category is empty");
         }
         return categoryRepository.findAll();
     }
@@ -45,6 +45,9 @@ public class CategoryServiceImpl implements CategoryService {
                         throw new AppException(ErrorModelConstants.CATEGORY_EXISTS, "Category already exists");
                     }
                     exitstingCategory.setNameCategory(category.getNameCategory());
+                    if(exitstingCategory.getNameCategory() == null){
+                        throw new AppException(ErrorModelConstants.CATEGORY_NAME_EMPTY, "Category name not empty");
+                    }
                     return categoryRepository.save(exitstingCategory);
                 }).orElseThrow(() -> {
                     throw new AppException(ErrorModelConstants.CATEGORY_NOT_FOUND, "Category not found");
