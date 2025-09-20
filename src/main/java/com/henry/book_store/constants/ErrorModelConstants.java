@@ -6,4 +6,7 @@ public class ErrorModelConstants {
     public static final String CATEGORY_EXISTS = "CATEGORY_EXISTS";
     public static final String CATEGORY_NAME_EMPTY = "CATEGORY_NAME_EMPTY";
     public static final String CATEGORY_EMPTY = "CATEGORY_IS_EMPTY";
+
+    public static final String BOOKS_IS_EMPTY = "BOOKS_IS_EMPTY";
+
 }

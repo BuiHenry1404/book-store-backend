@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -23,5 +23,8 @@ public class CategoryEntity {
     @Column(name = "name_category", nullable = false)
     private String nameCategory;
 
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Set<BookEntity> books = new HashSet<>();
 
 }

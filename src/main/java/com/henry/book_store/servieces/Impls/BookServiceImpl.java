@@ -1,7 +1,11 @@
 package com.henry.book_store.servieces.Impls;
 
+import com.henry.book_store.constants.ErrorModelConstants;
 import com.henry.book_store.entities.BookEntity;
+import com.henry.book_store.entities.CategoryEntity;
+import com.henry.book_store.exceptions.AppException;
 import com.henry.book_store.repositories.BookRepository;
+import com.henry.book_store.repositories.CategoryRepository;
 import com.henry.book_store.servieces.BookService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +16,12 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
-    BookServiceImpl(BookRepository bookRepository) {
+    BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
+
     }
 
 
@@ -48,6 +55,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookEntity> getAllBooks() {
-        return bookRepository.findAll();
+
+        List<BookEntity> books = bookRepository.findAll();
+
+        if(books.isEmpty()) {
+            throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY, "Books is empty");
+        }
+
+        return books;
+
     }
 }

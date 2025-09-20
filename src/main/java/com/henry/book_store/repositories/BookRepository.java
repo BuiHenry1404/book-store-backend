@@ -10,4 +10,10 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
+    List<BookEntity> findByTitleContainingIgnoreCase(String title);
+    List<BookEntity> findByAuthorContainingIgnoreCase(String author);
+    List<BookEntity> findByCategories_CategoryId(Integer id);
+
+
+
 }
