@@ -22,6 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryEntity> getAllCategories() {
+        if(categoryRepository.findAll().isEmpty()){
+            throw new AppException(ErrorModelConstants.CATEGORY_EMPTY, "Category is empty.");
+        }
         return categoryRepository.findAll();
     }
 
