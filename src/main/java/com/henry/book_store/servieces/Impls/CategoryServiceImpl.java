@@ -27,6 +27,12 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryRepository.findAll();
     }
+    
+    @Override
+    public CategoryEntity getCategoryById(Integer id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorModelConstants.CATEGORY_NOT_FOUND, "Category not found with id: " + id));
+    }
 
     @Override
     public CategoryEntity addCategory(CategoryEntity category) {

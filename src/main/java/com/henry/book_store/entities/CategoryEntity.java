@@ -13,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class CategoryEntity {
 
     @Id

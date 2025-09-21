@@ -1,10 +1,9 @@
 package com.henry.book_store.controllers;
 
-import com.henry.book_store.dtos.BookDTO;
+import com.henry.book_store.entities.BookEntity;
 import com.henry.book_store.servieces.BookService;
 import com.henry.book_store.servieces.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +18,8 @@ public class BookController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getAllBooks() {
-        List<BookDTO> books = bookService.getAllBooks();
+    public ResponseEntity<List<BookEntity>> getAllBooks() {
+        List<BookEntity> books = bookService.getAllBooks();
         return ResponseEntity.ok(books);
     }
 

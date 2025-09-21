@@ -1,14 +1,10 @@
 package com.henry.book_store.servieces;
 
-import com.henry.book_store.dtos.BookDTO;
+import com.henry.book_store.entities.BookEntity;
+
 import java.util.List;
+import java.util.Set;
 
 public interface BookService {
-    List<BookDTO> getAllBooks();
-    
-    // Uncomment and update these methods when implementing them
-    // BookDTO getBookById(Integer id);
-    // BookDTO createBook(BookDTO bookDTO);
-    // BookDTO updateBook(Integer id, BookDTO bookDTO);
-    // void deleteBook(Integer id);
+    List<BookEntity> getAllBooks();
 }
