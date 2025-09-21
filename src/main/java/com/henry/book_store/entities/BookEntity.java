@@ -2,6 +2,7 @@ package com.henry.book_store.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,6 +46,7 @@ public class BookEntity {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     @JsonIgnoreProperties("books")
+    @JsonManagedReference
     private Set<CategoryEntity> categories = new HashSet<>();
 
 
