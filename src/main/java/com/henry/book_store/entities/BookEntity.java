@@ -1,6 +1,7 @@
 package com.henry.book_store.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,10 +40,11 @@ public class BookEntity {
     private String description;
 
     @ManyToMany
-    @JoinTable(name = "boook_category",
+    @JoinTable(name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @JsonIgnoreProperties("books")
     private Set<CategoryEntity> categories = new HashSet<>();
 
 

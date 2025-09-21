@@ -10,10 +10,12 @@ public abstract class UrlUtil {
     public static final String BASE_URL = PREFIX + API_VERSION;
 
     public static final String CATEGORY_URL = BASE_URL + "/categories";
+    public static final String BOOK_URL = BASE_URL + "/books";
 
 
     public static final List<String> PUBLIC_URLS = Arrays.asList(
-            CATEGORY_URL
+            CATEGORY_URL,
+            BOOK_URL
 
     );
 }
