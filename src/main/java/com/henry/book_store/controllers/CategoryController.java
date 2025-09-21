@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> addCategory(CategoryDTO categoryEntityDTO) {
+    public ResponseEntity<CategoryDTO> addCategory(@RequestBody CategoryDTO categoryEntityDTO) {
         return ResponseEntity.ok(categoryService.addCategory(categoryEntityDTO));
     }
 
