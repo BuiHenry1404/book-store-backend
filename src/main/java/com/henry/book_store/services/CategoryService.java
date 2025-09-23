@@ -1,7 +1,6 @@
-package com.henry.book_store.servieces;
+package com.henry.book_store.services;
 
 import com.henry.book_store.dtos.CategoryDTO;
-import com.henry.book_store.entities.CategoryEntity;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.henry.book_store.controllers;
 
 import com.henry.book_store.dtos.CategoryDTO;
-import com.henry.book_store.servieces.Impls.CategoryServiceImpl;
+import com.henry.book_store.services.Impls.CategoryServiceImpl;
 import com.henry.book_store.utils.UrlUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

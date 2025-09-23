@@ -1,10 +1,8 @@
-package com.henry.book_store.servieces;
+package com.henry.book_store.services;
 
 import com.henry.book_store.dtos.BookDTO;
-import com.henry.book_store.entities.BookEntity;
 
 import java.util.List;
-import java.util.Set;
 
 public interface BookService {
     List<BookDTO> getAllBooks();

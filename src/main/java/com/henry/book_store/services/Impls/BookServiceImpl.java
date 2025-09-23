@@ -1,4 +1,4 @@
-package com.henry.book_store.servieces.Impls;
+package com.henry.book_store.services.Impls;
 
 import com.henry.book_store.constants.ErrorModelConstants;
 import com.henry.book_store.dtos.BookDTO;
@@ -6,7 +6,7 @@ import com.henry.book_store.entities.BookEntity;
 import com.henry.book_store.exceptions.AppException;
 import com.henry.book_store.mappers.BookMapper;
 import com.henry.book_store.repositories.BookRepository;
-import com.henry.book_store.servieces.BookService;
+import com.henry.book_store.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

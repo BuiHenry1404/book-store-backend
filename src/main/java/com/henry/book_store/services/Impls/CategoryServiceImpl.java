@@ -1,4 +1,4 @@
-package com.henry.book_store.servieces.Impls;
+package com.henry.book_store.services.Impls;
 
 import com.henry.book_store.constants.ErrorModelConstants;
 import com.henry.book_store.dtos.CategoryDTO;
@@ -6,7 +6,7 @@ import com.henry.book_store.entities.CategoryEntity;
 import com.henry.book_store.exceptions.AppException;
 import com.henry.book_store.mappers.CategoryMapper;
 import com.henry.book_store.repositories.CategoryRepository;
-import com.henry.book_store.servieces.CategoryService;
+import com.henry.book_store.services.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

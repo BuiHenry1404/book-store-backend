@@ -1,7 +1,7 @@
 package com.henry.book_store.controllers;
 
 import com.henry.book_store.dtos.BookDTO;
-import com.henry.book_store.servieces.BookService;
+import com.henry.book_store.services.BookService;
 import com.henry.book_store.utils.UrlUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
