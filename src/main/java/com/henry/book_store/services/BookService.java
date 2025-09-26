@@ -15,6 +15,7 @@ public interface BookService {
 
     List<BookDTO> getBookByCategory(Integer categoryId);
 
-
     BookDTO createBook(BookDTO bookDTO);
+
+    BookDTO updateBook(Integer id, BookDTO bookDTO);
 }

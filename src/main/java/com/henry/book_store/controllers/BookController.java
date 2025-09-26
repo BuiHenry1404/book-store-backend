@@ -8,6 +8,7 @@ import com.henry.book_store.utils.UrlUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,9 +58,15 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> createBook(@Validated @RequestBody BookDTO bookDTO) {
         // Additional validation can be added here if needed
-        return ResponseEntity.ok(bookService.createBook(bookDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(bookDTO));
+    }
+
+    @PutMapping("/{id_book}")
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Integer id_book,
+                                              @Validated(BookDTO.UpdateValidation.class) @RequestBody BookDTO bookDTO){
+        return ResponseEntity.ok(bookService.updateBook(id_book, bookDTO));
     }
 
 }

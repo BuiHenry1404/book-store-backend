@@ -84,5 +84,33 @@ public class BookServiceImpl implements BookService {
         return bookMapper.bookToBookDTO(bookRepository.save(book));
     }
 
+    @Override
+    public BookDTO updateBook(Integer id, BookDTO book) {
+
+        BookEntity bookEntity = bookRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorModelConstants.BOOKS_IS_EMPTY,
+                        "Not found a book with id: " + id));
+
+        BookDTO bookDTO = bookMapper.bookToBookDTO(bookEntity);
+
+        // Check if another book with the same title already exists (excluding current book)
+        if (bookRepository.existsByTitleAndIdNot(book.getTitle(), id)) {
+            throw new AppException(ErrorModelConstants.BOOK_EXISTS,
+                    "Book with title: " + book.getTitle() + " already exists");
+        }
+
+        // Update the bookDTO with new values from the request
+        bookDTO.setTitle(book.getTitle());
+        bookDTO.setAuthor(book.getAuthor());
+        bookDTO.setDescription(book.getDescription());
+        bookDTO.setPrice(book.getPrice());
+        bookDTO.setAvailable(book.isAvailable());
+        bookDTO.setCategories(book.getCategories());
+
+        BookEntity updatedBookEntity = bookMapper.bookDTOToBook(bookDTO);
+        updatedBookEntity.setId(id); //
+        return bookMapper.bookToBookDTO(bookRepository.save(updatedBookEntity));
+    }
+
 
 }
