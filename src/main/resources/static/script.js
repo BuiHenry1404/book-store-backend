@@ -11,6 +11,8 @@ class BookStoreApp {
         this.searchInput = document.getElementById('searchInput');
         this.searchBtn = document.getElementById('searchBtn');
         this.clearBtn = document.getElementById('clearBtn');
+        this.searchType = document.getElementById('searchType');
+        this.categorySelect = document.getElementById('categorySelect');
 
         this.init();
     }
@@ -19,6 +21,7 @@ class BookStoreApp {
         this.refreshBtn.addEventListener('click', () => this.loadBooks());
         this.searchBtn.addEventListener('click', () => this.searchBooks());
         this.clearBtn.addEventListener('click', () => this.clearSearch());
+        this.searchType.addEventListener('change', () => this.handleSearchTypeChange());
         this.searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.searchBooks();
@@ -26,6 +29,49 @@ class BookStoreApp {
         });
 
         this.loadBooks();
+        this.loadCategories();
+    }
+
+    handleSearchTypeChange() {
+        const searchType = this.searchType.value;
+        if (searchType === 'category') {
+            this.categorySelect.style.display = 'block';
+            this.searchInput.style.display = 'none';
+            this.searchInput.value = '';
+        } else {
+            this.categorySelect.style.display = 'none';
+            this.searchInput.style.display = 'block';
+            this.categorySelect.value = '';
+        }
+    }
+
+    async loadCategories() {
+        try {
+            console.log('Loading categories from:', `${API_BASE_URL}/categories`);
+            const response = await fetch(`${API_BASE_URL}/categories`);
+            const categories = await response.json();
+
+            console.log('Categories response status:', response.status);
+            console.log('Categories response ok:', response.ok);
+            console.log('Categories data:', categories);
+
+            if (response.ok && categories && categories.length > 0) {
+                console.log('Populating category dropdown with', categories.length, 'categories');
+                this.categorySelect.innerHTML = '<option value="">Select Category...</option>';
+                categories.forEach((category, index) => {
+                    console.log(`Category ${index}:`, category);
+                    const option = document.createElement('option');
+                    option.value = category.id; // Changed from category.idCategory to category.id
+                    option.textContent = category.nameCategory;
+                    this.categorySelect.appendChild(option);
+                });
+                console.log('Category dropdown populated successfully');
+            } else {
+                console.error('Failed to load categories:', { response, categories });
+            }
+        } catch (error) {
+            console.error('Error loading categories:', error);
+        }
     }
 
     async loadBooks() {
@@ -49,10 +95,40 @@ class BookStoreApp {
     }
 
     async searchBooks() {
-        const searchTerm = this.searchInput.value.trim();
-        if (!searchTerm) {
-            this.loadBooks();
-            return;
+        const searchType = this.searchType.value;
+        let searchTerm = '';
+        let searchValue = '';
+
+        if (searchType === 'category') {
+            searchValue = this.categorySelect.value;
+            console.log('Category search - selected value:', searchValue);
+            console.log('Category select element:', this.categorySelect);
+            console.log('Category select options:', this.categorySelect.options);
+
+            // Check if no category is selected or if value is "undefined" or empty
+            if (!searchValue || searchValue === "" || searchValue === "undefined" || searchValue === "Select Category...") {
+                console.log('No valid category selected, loading all books');
+                this.loadBooks();
+                return;
+            }
+
+            // Convert to number to ensure it's a valid integer
+            const categoryId = parseInt(searchValue, 10);
+            if (isNaN(categoryId) || categoryId <= 0) {
+                console.log('Invalid category ID:', categoryId);
+                this.loadBooks();
+                return;
+            }
+
+            searchValue = categoryId.toString();
+            console.log('Using category ID:', searchValue);
+        } else {
+            searchTerm = this.searchInput.value.trim();
+            if (!searchTerm) {
+                this.loadBooks();
+                return;
+            }
+            searchValue = encodeURIComponent(searchTerm);
         }
 
         try {
@@ -60,7 +136,18 @@ class BookStoreApp {
             this.hideError();
             this.hideEmptyState();
 
-            const response = await fetch(`${API_BASE_URL}/books/title/${encodeURIComponent(searchTerm)}`);
+            let url = '';
+            if (searchType === 'title') {
+                url = `${API_BASE_URL}/books/title/${searchValue}`;
+            } else if (searchType === 'author') {
+                url = `${API_BASE_URL}/books/author/${searchValue}`;
+            } else if (searchType === 'category') {
+                url = `${API_BASE_URL}/books/category/${searchValue}`;
+                console.log('Category search URL:', url);
+            }
+
+            console.log('Making request to:', url);
+            const response = await fetch(url);
             const books = await response.json();
 
             if (!response.ok) {
@@ -76,6 +163,9 @@ class BookStoreApp {
 
     clearSearch() {
         this.searchInput.value = '';
+        this.categorySelect.value = '';
+        this.searchType.value = 'title';
+        this.handleSearchTypeChange();
         this.loadBooks();
     }
 

@@ -60,12 +60,28 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBookByAuthor(String author) {
         List<BookEntity> books = bookRepository.findByAuthorContainingIgnoreCase(author);
 
-       if(books == null || books.isEmpty()) {
-           throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY,
-                   "List of books is empty.");
-       }
+        if(books == null || books.isEmpty()) {
+            throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY,
+                    "List of books is empty.");
+        }
 
         return bookMapper.booksToBookDTOs(books);
+    }
+    @Override
+    public List<BookDTO> getBookByCategory(Integer categoryId) {
+        List<BookEntity> books = bookRepository.findByCategories_Id(categoryId);
+        if (books == null || books.isEmpty()) {
+            throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY, "List of books is empty.");
+        }
+        return bookMapper.booksToBookDTOs(books);
+    }
+
+    @Override
+    public BookDTO createBook(BookDTO bookDTO) {
+        BookEntity book = bookMapper.bookDTOToBook(bookDTO);
+
+
+        return bookMapper.bookToBookDTO(bookRepository.save(book));
     }
 
 

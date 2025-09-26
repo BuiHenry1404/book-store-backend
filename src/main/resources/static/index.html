@@ -11,7 +11,15 @@
         <header>
             <h1>📚 Book Store</h1>
             <div class="search-container">
+                <select id="searchType" class="search-select">
+                    <option value="title">🔍 Title</option>
+                    <option value="author">👤 Author</option>
+                    <option value="category">📂 Category</option>
+                </select>
                 <input type="text" id="searchInput" placeholder="🔍 Search books by title..." class="search-input">
+                <select id="categorySelect" class="search-select" style="display: none;">
+                    <option value="">Select Category...</option>
+                </select>
                 <button id="searchBtn" class="btn-primary">Search</button>
                 <button id="clearBtn" class="btn-secondary">Clear</button>
             </div>

@@ -13,5 +13,8 @@ public interface BookService {
 
     List<BookDTO> getBookByAuthor(String author);
 
+    List<BookDTO> getBookByCategory(Integer categoryId);
 
+
+    BookDTO createBook(BookDTO bookDTO);
 }
