@@ -9,7 +9,9 @@ import com.henry.book_store.repositories.BookRepository;
 import com.henry.book_store.services.BookService;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -34,4 +36,37 @@ public class BookServiceImpl implements BookService {
 
         return bookMapper.booksToBookDTOs(books);
     }
+
+    @Override
+    public BookDTO getBookById(Integer id) {
+        Optional<BookEntity> book = bookRepository.findById(id);
+        if(book.isPresent()){
+            return bookMapper.bookToBookDTO(book.get());
+        }
+        throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY, "Not found a book" +
+                                                                        "with id: " + book.get().getId());
+    }
+
+    @Override
+    public List<BookDTO> getBookByTitle(String title) {
+        List<BookEntity> books = bookRepository.findByTitleContainingIgnoreCase(title);
+        if (books == null || books.isEmpty()) {
+            throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY, "List of books is empty.");
+        }
+        return bookMapper.booksToBookDTOs(books);
+    }
+
+    @Override
+    public List<BookDTO> getBookByAuthor(String author) {
+        List<BookEntity> books = bookRepository.findByAuthorContainingIgnoreCase(author);
+
+       if(books == null || books.isEmpty()) {
+           throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY,
+                   "List of books is empty.");
+       }
+
+        return bookMapper.booksToBookDTOs(books);
+    }
+
+
 }

@@ -8,5 +8,6 @@ public class ErrorModelConstants {
     public static final String CATEGORY_EMPTY = "CATEGORY_IS_EMPTY";
 
     public static final String BOOKS_IS_EMPTY = "BOOKS_IS_EMPTY";
+    public static final String BOOK_NOT_FOUND = "BOOKS_NOT_FOUND";
 
 }

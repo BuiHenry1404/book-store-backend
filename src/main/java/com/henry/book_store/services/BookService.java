@@ -6,4 +6,12 @@ import java.util.List;
 
 public interface BookService {
     List<BookDTO> getAllBooks();
+
+    BookDTO getBookById(Integer id);
+
+    List<BookDTO> getBookByTitle(String title);
+
+    List<BookDTO> getBookByAuthor(String author);
+
+
 }

@@ -31,5 +31,5 @@ public class BookDTO {
     
     private String description;
     
-    private Set<String> categories = new HashSet<>();
+    private Set<CategoryDTO> categories = new HashSet<>();
 }

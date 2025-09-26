@@ -15,7 +15,7 @@ public abstract class UrlUtil {
 
     public static final List<String> PUBLIC_URLS = Arrays.asList(
             CATEGORY_URL + "/**",
-            BOOK_URL
+            BOOK_URL + "/**"
 
     );
 }
