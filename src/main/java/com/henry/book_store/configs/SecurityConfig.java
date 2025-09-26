@@ -48,6 +48,6 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("classpath:/static/uploads/"); // sửa lại để load ảnh từ static/uploads
+                .addResourceLocations("file:src/main/resources/uploads/"); // thư mục thật trên máy
     }
 }
