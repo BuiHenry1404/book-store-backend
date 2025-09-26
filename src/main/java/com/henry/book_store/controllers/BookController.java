@@ -5,6 +5,7 @@ import com.henry.book_store.dtos.BookDTO;
 import com.henry.book_store.exceptions.AppException;
 import com.henry.book_store.services.BookService;
 import com.henry.book_store.utils.UrlUtil;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -56,7 +57,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> createBook( @RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO) {
         // Additional validation can be added here if needed
         return ResponseEntity.ok(bookService.createBook(bookDTO));
     }
