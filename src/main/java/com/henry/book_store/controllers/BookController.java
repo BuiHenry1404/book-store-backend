@@ -58,15 +58,20 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> createBook(@Validated @RequestBody BookDTO bookDTO) {
-        // Additional validation can be added here if needed
+    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO bookDTO) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(bookDTO));
     }
 
     @PutMapping("/{id_book}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable Integer id_book,
-                                              @Validated(BookDTO.UpdateValidation.class) @RequestBody BookDTO bookDTO){
+                                              @Valid @RequestBody BookDTO bookDTO){
         return ResponseEntity.ok(bookService.updateBook(id_book, bookDTO));
     }
 
+    @DeleteMapping("/{id_book}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Integer id_book) {
+        bookService.deleteBook(id_book);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -18,4 +18,6 @@ public interface BookService {
     BookDTO createBook(BookDTO bookDTO);
 
     BookDTO updateBook(Integer id, BookDTO bookDTO);
+
+    void deleteBook(Integer id);
 }

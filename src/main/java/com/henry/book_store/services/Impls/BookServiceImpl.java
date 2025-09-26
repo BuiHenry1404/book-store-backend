@@ -9,7 +9,6 @@ import com.henry.book_store.repositories.BookRepository;
 import com.henry.book_store.services.BookService;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +78,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDTO createBook(BookDTO bookDTO) {
         BookEntity book = bookMapper.bookDTOToBook(bookDTO);
-
+        if (bookRepository.existsByTitleIgnoreCase(book.getTitle())) {
+            throw new AppException(ErrorModelConstants.BOOK_EXISTS,
+                    "Book with title: " + book.getTitle() + " already exists");
+        }
 
         return bookMapper.bookToBookDTO(bookRepository.save(book));
     }
@@ -94,7 +96,7 @@ public class BookServiceImpl implements BookService {
         BookDTO bookDTO = bookMapper.bookToBookDTO(bookEntity);
 
         // Check if another book with the same title already exists (excluding current book)
-        if (bookRepository.existsByTitleAndIdNot(book.getTitle(), id)) {
+        if (bookRepository.existsByTitleIgnoreCase(book.getTitle())) {
             throw new AppException(ErrorModelConstants.BOOK_EXISTS,
                     "Book with title: " + book.getTitle() + " already exists");
         }
@@ -110,6 +112,19 @@ public class BookServiceImpl implements BookService {
         BookEntity updatedBookEntity = bookMapper.bookDTOToBook(bookDTO);
         updatedBookEntity.setId(id); //
         return bookMapper.bookToBookDTO(bookRepository.save(updatedBookEntity));
+    }
+
+    @Override
+    public void deleteBook(Integer id) {
+
+        Optional<BookEntity> book = bookRepository.findById(id);
+
+        if (book.isEmpty()) {
+            throw new AppException(ErrorModelConstants.BOOKS_IS_EMPTY,
+                    "Not found a book with id: " + id);
+        }
+
+        bookRepository.deleteById(id);
     }
 
 
